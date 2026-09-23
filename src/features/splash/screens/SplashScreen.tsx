@@ -1,30 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
 import {
   ActivityIndicator,
   Image,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { colors } from '../../../core/theme/colors';
 
-export function SplashScreen() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
+type SplashScreenProps = {
+  onReady: () => void;
+};
 
+export function SplashScreen({ onReady }: SplashScreenProps) {
+  return (
+    <SafeAreaView style={styles.container} testID="splash-screen">
       <View style={styles.content}>
         <View style={styles.logoContainer}>
           <Image
             accessibilityLabel="StepTune 로고"
             source={require('../../../../assets/steptune-logo.png')}
             style={styles.logo}
+            onLoadEnd={onReady}
           />
         </View>
 
-        <Text style={styles.title}>StepTune</Text>
+        <Text accessibilityRole="header" style={styles.title}>
+          StepTune
+        </Text>
         <Text style={styles.subtitle}>오늘의 걸음에 어울리는 음악</Text>
       </View>
 
